@@ -1,0 +1,23 @@
+_repo: Personal-Recollections-of-Early-Melbourne-and-Victoria_5789
+creator:
+  author:
+    agent_name: Westgarth, William
+    birthdate: 1815
+    deathdate: 1889
+    gutenberg_agent_id: '1873'
+    url: http://www.gutenberg.org/2009/agents/1873
+    wikipedia: http://en.wikipedia.org/wiki/William_Westgarth
+description: ''
+gutenberg_issued: '2004-05-01'
+gutenberg_type: Text
+identifiers:
+  gutenberg: '5789'
+language: en
+publisher: Project Gutenberg
+rights: Public domain in the USA.
+rights_url: http://creativecommons.org/about/pdm
+subjects:
+- !lcsh 'Victoria -- Description and travel'
+- !lcc 'DU'
+title: Personal Recollections of Early Melbourne and Victoria
+url: http://www.gutenberg.org/ebooks/5789
