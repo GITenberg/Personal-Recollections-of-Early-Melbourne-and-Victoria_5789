@@ -1,0 +1,61 @@
+sudo: required
+dist: trusty
+language: ruby
+
+before_install:
+before_install:
+- gem install asciidoctor -v 1.5.2
+- gem install tilt
+- sudo pip install git+https://github.com/gitenberg-dev/gitberg
+- sudo pip install pillow
+- sudo pip install cssutils
+- sudo pip install docutils
+- sudo pip install roman
+- sudo pip install git+https://github.com/gitenberg-dev/pg-epubmaker
+script:
+- VERSION=`ruby -e "require 'yaml'; meta = YAML.load_file('metadata.yaml'); puts meta['_version'];"`
+- git clone https://github.com/gitenberg-dev/asciidoctor-htmlbook.git
+- sudo pip install -r asciidoctor-htmlbook/gitberg-machine/requirements.txt
+
+- /usr/bin/python -c "from gitenberg import travis; travis.build_epub()"
+- ebook-convert book.epub book.mobi
+- xvfb-run ebook-convert book.epub book.pdf
+branches:
+  only:
+  - master
+notifications:
+  webhooks:
+    urls:
+      - https://unglue.it/api/travisci/webhook
+    on_success: always
+    on_failure: never
+    on_start: never
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: l3zSnMVXnX+vbLTbd1RP74HI7ys3dbuQ6VITGG0vbCv66ov34IWYtyqoA7mqzZ+6VOm5qN2Vcc3T/Pd1fkRlgFHZOAh+Wh5KR6sZ3ccOH1FZ1m+yBrFshtoEGeqNDvLzEGzYbtFrAQLVw03S5FqcMdhBEEvwPc39HCNHrX6QXLoIzBNGT0KRBbXxNspm6iefCbji5RupZH6E6iXwev3i/gHo0AGkARwmYGKCs582TNsV0Pa659Phwx9mXoU13+ML+zpnK10YVeRSkAI3XQdsomlUoMWvB5LulFAgaSy42RzbkPgH2AyMuDdFJr79zR5fnmty5vvUiVLEe1rmTWLFHDuCjzG7Q8lA9PsjxaQpF2ouGTyBzyfRiWXsjXttJzYEMG4TJcxZGd039w36+wxjgi7FaXb4JGyi7YXbA8u+hkevgYBPyLHZlbsu7Q+4l5DNVVejPilo/zaJy7SPsbKj/beMumGlYynEgBFZdBLJYwzDMpiXkJr6DeKxm7dxlepcmMM2W2JsWKLYqp5goNZ+uesm27/7pwPerMmNIWvkxJxJl9hrCR13z0/4HxU3oGRIplrFsCLbWJdRfR2vCnsBH9GkjLaoSTWnWYgfyv6oyv9AQw2yvrIk5THNPGBwXvAJavvreb8S44bgNrCGoUrpaoxHsyCqh6cEQ5tL1i3G740=
+  file:
+    - book.epub
+    - book.mobi
+    - book.pdf
+  "on":
+    repo: GITenberg/Personal-Recollections-of-Early-Melbourne-and-Victoria_5789
+addons:
+  apt:
+    packages:
+    - xsltproc
+    - xvfb
+    - calibre
+    - python-pip
+    - git
+    - python-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-lxml
+    - libxml2-dev
+    - libxslt1-dev
+    - tidy
